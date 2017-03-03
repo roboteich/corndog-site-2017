@@ -11,7 +11,7 @@ import { loadSceneDataURL } from '../lib/sceneService';
 //--------------------------
 
 // preload - kicks of loading of everything
-const ready = () => ({ type: 'READY' });
+export const ready = () => ({ type: 'READY' });
 
 const requestScene = (index) => ({
   type: 'REQUEST_SCENE',
@@ -36,8 +36,8 @@ const fetchScene = (index) => (dispatch, getState) => {
 export const preload = () => (dispatch, getState) => {
   const { scenes } = getState();
   return Promise
-    .all(scenes.map((scene, index) => dispatch(fetchScene(index))))
-    .then(() => dispatch(ready()));
+    .all(scenes.map((scene, index) => dispatch(fetchScene(index))));
+    //.then(() => dispatch(ready()));
 }
 
 

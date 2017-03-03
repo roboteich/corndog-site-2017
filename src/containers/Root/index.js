@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import { getSceneCount } from '../../reducers/scenes';
 import { isBlitzing } from '../../reducers/blitz';
+import {spring, Motion} from 'react-motion';
 
 class Root extends Component {
 
@@ -13,12 +14,27 @@ class Root extends Component {
     actions: React.PropTypes.object.isRequired
   }
 
+  constructor() {
+    super();
+    this.state = {
+      preloadSequenceComplete: false
+    }
+  }
+
   handleBlitzClick = (e) => {
-    e.preventDefault();
-    if(this.props.blitz) {
-      this.props.actions.stopBlitz();
-    } else {
-      this.props.actions.startBlitz();
+    this.props.actions.ready();
+    this.props.actions.startBlitz();
+  }
+
+  handleBlitzToggle = () => {
+    (this.props.blitz ?
+      this.props.actions.stopBlitz() :
+      this.props.actions.startBlitz())
+  }
+
+  handlePreloadRest = () => {
+    if(this.props.loadProgress === 1){
+      this.setState({preloadSequenceComplete:true});
     }
   }
 
@@ -34,24 +50,53 @@ class Root extends Component {
 
 
     return(
-      <div className="site-container">
-        <h1>Corndog day 2017</h1>
-        <h2>load progress</h2>
-        <p> { Math.floor(this.props.loadProgress * 100) }</p>
-        <h2>ready</h2>
-        <p> { this.props.ready.toString() } </p>
-
-        {this.props.ready &&
-          <a href="#" onClick={this.handleBlitzClick}>{
-            this.props.blitz ? "stop" : "start"
-          }</a>
-        }
-        <h2>active index</h2>
-        <p> { this.props.activeSceneIndex }</p>
-        <h2> images </h2>
-        <p>
-          <img alt="corndog" src={this.props.scenes[this.props.activeSceneIndex].srcDataURL} width="100%" />
-        </p>
+      <div className="site-container fit">
+        <header className="site-header">
+        </header>
+        <article className="site-content">
+          { !this.props.ready && (
+          <section className="layer layer--splash">
+            <div className="layer__body splash">
+              <div className="splash__heading">
+                <h1>Corndog day 2017</h1>
+              </div>
+              {
+                this.state.preloadSequenceComplete ? (
+                  <a href="#" onClick={this.handleBlitzClick} className="splash__start-btn button button--primary">
+                    blitz!
+                  </a>
+                ) : (
+                  <div className="splash__loader progress">
+                    <div className="progress__track">
+                      <Motion
+                        onRest={this.handlePreloadRest}
+                        defaultStyle={{width: 0}}
+                        style={{
+                          width:spring(this.props.loadProgress * 100)
+                        }}>
+                          {({width}) =>
+                            <div className="progress__fill"
+                              style={{width: width+"%"}}
+                            />
+                          }
+                          </Motion>
+                      </div>
+                    </div>
+                  )}
+              </div>
+            </section>
+          )}
+          <section className="layer layer--blitz">
+            <div className="layer__body blitz" onClick={this.handleBlitzToggle}>
+              <img alt="corndog" className="blitz__img" src={this.props.blitzSrcDataURL} />
+              <div className="blitz__info button button--primary">
+                { this.props.blitz ? "stop blitz" : "start blitz" }
+              </div>
+            </div>
+          </section>
+        </article>
+        <footer className="site-footer">
+        </footer>
       </div>
     );
 
@@ -65,7 +110,8 @@ const mapStateToProps = (state) => {
   return {
     ...state,
     loadProgress: (preload / getSceneCount(scenes)),
-    blitz: isBlitzing(blitz)
+    blitz: isBlitzing(blitz),
+    blitzSrcDataURL: state.scenes[state.activeSceneIndex].srcDataURL
   }
 };
 
