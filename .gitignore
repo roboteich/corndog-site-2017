@@ -8,6 +8,7 @@
 
 # production
 /build
+/proj-assets
 
 # misc
 .DS_Store

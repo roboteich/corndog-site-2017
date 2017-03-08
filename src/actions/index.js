@@ -3,7 +3,6 @@
 // thunk actionCreators look like (args) => (dispatch, getState) => {type}
 
 import { isBlitzing } from '../reducers/blitz';
-import { getSceneCount } from '../reducers/scenes';
 import { loadSceneDataURL } from '../lib/sceneService';
 
 
@@ -54,14 +53,11 @@ export const startBlitz = () => (dispatch, getState) => {
   const interval = setInterval(() => {
     const state = getState();
     //determine the next activeScene
-    let index = state.activeSceneIndex + 1;
-    if(index >= getSceneCount(state.scenes)) {
-        index = 0;
-    }
+    let count = state.blitz.count + 1;
 
     dispatch({
       type: 'BLITZ_TICK',
-      index
+      count
     });
   }, 100);
 
@@ -72,6 +68,6 @@ export const startBlitz = () => (dispatch, getState) => {
 }
 
 export const stopBlitz = () => (dispatch, getState) => {
-  clearInterval(getState().blitz);
+  clearInterval(getState().blitz.interval);
   dispatch({ type: 'BLITZ_STOP' });
 }

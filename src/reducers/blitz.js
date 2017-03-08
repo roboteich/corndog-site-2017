@@ -1,16 +1,20 @@
 // reducers
-export default (state = null, action) => {
+export default (state = {interval: null, count: 0}, action) => {
   switch (action.type) {
     case "BLITZ_START":
-      return action.interval;
+      return {...state, interval: action.interval};
 
     case "BLITZ_STOP":
-      return null;
+      return {...state, interval: null};
+
+    case "BLITZ_TICK":
+      return {...state, count: action.count};
 
     default:
       return state;
   }
 }
 
+
 // selectors
-export const isBlitzing = (state) => (null !== state);
+export const isBlitzing = (state) => (null !== state.interval);

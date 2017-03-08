@@ -1,24 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-import { getSceneCount } from '../../reducers/scenes';
+import { getBlitzedScene } from '../../reducers';
 import { isBlitzing } from '../../reducers/blitz';
-import {spring, Motion} from 'react-motion';
 
 class Root extends Component {
 
   static propTypes = {
-    loadProgress: React.PropTypes.number.isRequired,
     scenes: React.PropTypes.array.isRequired,
-    ready: React.PropTypes.bool.isRequired,
     actions: React.PropTypes.object.isRequired
-  }
-
-  constructor() {
-    super();
-    this.state = {
-      preloadSequenceComplete: false
-    }
   }
 
   handleBlitzClick = (e) => {
@@ -32,11 +22,6 @@ class Root extends Component {
       this.props.actions.startBlitz())
   }
 
-  handlePreloadRest = () => {
-    if(this.props.loadProgress === 1){
-      this.setState({preloadSequenceComplete:true});
-    }
-  }
 
   componentDidMount() {
     //kickoff image load
@@ -47,7 +32,7 @@ class Root extends Component {
 
   render() {
     //render load progress, readyState
-
+    const activeSceneSrc = (this.props.activeScene) ? this.props.activeScene.srcDataURL : "";
 
     return(
       <div className="site-container fit">
@@ -60,35 +45,15 @@ class Root extends Component {
               <div className="splash__heading">
                 <h1>Corndog day 2017</h1>
               </div>
-              {
-                this.state.preloadSequenceComplete ? (
-                  <a href="#" onClick={this.handleBlitzClick} className="splash__start-btn button button--primary">
-                    blitz!
-                  </a>
-                ) : (
-                  <div className="splash__loader progress">
-                    <div className="progress__track">
-                      <Motion
-                        onRest={this.handlePreloadRest}
-                        defaultStyle={{width: 0}}
-                        style={{
-                          width:spring(this.props.loadProgress * 100)
-                        }}>
-                          {({width}) =>
-                            <div className="progress__fill"
-                              style={{width: width+"%"}}
-                            />
-                          }
-                          </Motion>
-                      </div>
-                    </div>
-                  )}
-              </div>
-            </section>
+              <a href="#" onClick={this.handleBlitzClick} className="splash__start-btn button button--primary">
+                blitz!
+              </a>
+            </div>
+          </section>
           )}
           <section className="layer layer--blitz">
             <div className="layer__body blitz" onClick={this.handleBlitzToggle}>
-              <img alt="corndog" className="blitz__img" src={this.props.blitzSrcDataURL} />
+              <img alt="corndog" className="blitz__img" src={activeSceneSrc} />
               <div className="blitz__info button button--primary">
                 { this.props.blitz ? "stop blitz" : "start blitz" }
               </div>
@@ -105,13 +70,12 @@ class Root extends Component {
 
 const mapStateToProps = (state) => {
 
-  const {preload, scenes, blitz} = state;
+  const {blitz} = state;
 
   return {
     ...state,
-    loadProgress: (preload / getSceneCount(scenes)),
     blitz: isBlitzing(blitz),
-    blitzSrcDataURL: state.scenes[state.activeSceneIndex].srcDataURL
+    activeScene: getBlitzedScene(state)
   }
 };
 

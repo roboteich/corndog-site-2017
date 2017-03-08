@@ -48,3 +48,5 @@ export default (state = defaultScenes, action) => {
 //selectors
 export const getSceneCount = (state) => state.length;
 export const getSceneAtIndex = (state, index) => state[index];
+export const getLoadedScenes = (state) =>
+  state.filter((scene) => (null !== scene.srcDataURL));
