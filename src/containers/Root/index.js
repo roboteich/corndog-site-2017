@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import { getBlitzedScene } from '../../reducers';
 import { isBlitzing } from '../../reducers/blitz';
+import Splash from '../../components/Splash';
 
 class Root extends Component {
 
@@ -11,7 +12,7 @@ class Root extends Component {
     actions: React.PropTypes.object.isRequired
   }
 
-  handleBlitzClick = (e) => {
+  handleSplashStartClick = (e) => {
     this.props.actions.ready();
     this.props.actions.startBlitz();
   }
@@ -35,21 +36,12 @@ class Root extends Component {
     const activeSceneSrc = (this.props.activeScene) ? this.props.activeScene.srcDataURL : "";
 
     return(
-      <div className="site-container fit">
+      <div className="site-container xs-full-height xs-fit">
         <header className="site-header">
         </header>
         <article className="site-content">
           { !this.props.ready && (
-          <section className="layer layer--splash">
-            <div className="layer__body splash">
-              <div className="splash__heading">
-                <h1>Corndog day 2017</h1>
-              </div>
-              <a href="#" onClick={this.handleBlitzClick} className="splash__start-btn button button--primary">
-                blitz!
-              </a>
-            </div>
-          </section>
+            <Splash onStartClick={this.handleSplashStartClick} />
           )}
           <section className="layer layer--blitz">
             <div className="layer__body blitz" onClick={this.handleBlitzToggle}>
@@ -60,8 +52,6 @@ class Root extends Component {
             </div>
           </section>
         </article>
-        <footer className="site-footer">
-        </footer>
       </div>
     );
 

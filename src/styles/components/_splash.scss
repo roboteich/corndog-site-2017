@@ -1,0 +1,41 @@
+.layer.layer--splash {
+  background-color: $color-white;
+}
+
+.layer.layer--splash .splash {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  .splash__heading {
+    flex:0 0 auto;
+  }
+  .splash__hero {
+    flex:0 1 auto;
+    overflow: hidden;
+    position:relative;
+    width: 100%;
+
+    &::before {
+      width:100%;
+      padding-top:38%;
+      display:block;
+      content:"";
+    }
+
+  }
+
+  .splash__hero-image {
+    position:absolute;
+    top:0;
+    transform: translate3d(-50%, 0, 0);
+    height: 100%;
+  }
+
+  .splash__start-btn {
+    flex:0 0 auto;
+  }
+
+}

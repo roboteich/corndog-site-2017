@@ -1,0 +1,24 @@
+.button {
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
+
+  &.button--primary {
+    font-weight: $bold;
+    color: $color-white;
+    background-color: $color-gold;
+  }
+
+  &.button--large {
+    font-size: $text-3;
+
+    @include solid-breakpoint('xs') {
+        padding: $space-1 $space-2;
+    }
+
+    @include solid-breakpoint('md') {
+        padding: $space-3 $space-4;
+    }
+
+  }
+}

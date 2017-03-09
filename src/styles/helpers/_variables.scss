@@ -8,10 +8,14 @@ $generate-responsive-classes: true;
 // Typography
 //----------------------------------------
 
-$gothic: 'Roboto Condensed', Arial, Helvetica, sans-serif;
-$sans: Arial, Helvetica, sans-serif;
+$heavy: 'Kanit', Arial, Helvetica, sans-serif;
+$sans: 'Roboto Condensed', Arial, Helvetica, sans-serif;
 
-$base-font-size: 23px;
+$base-font-size-xs: 14px;
+$base-font-size-sm: 16px;
+$base-font-size-md: 18px;
+$base-font-size-lg: 23px;
+
 $text-6: .444rem;
 $text-5: .667rem;
 $text-4:1rem;
@@ -60,3 +64,12 @@ $space-1: $space;
 $space-2: $space * 2;
 $space-3: $space * 3;
 $space-4: $space * 4;
+$space-5: $space * 5;
+$space-6: $space * 6;
+
+// Z-index
+// -------------------------
+$z1: 100 !default;
+$z2: 200 !default;
+$z3: 300 !default;
+$z4: 400 !default;
