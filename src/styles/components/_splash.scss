@@ -1,5 +1,18 @@
 .layer.layer--splash {
   background-color: $color-white;
+  &::after {
+    width:100%;
+    height:100%;
+    position:absolute;
+    display:block;
+    //mix-blend-mode: multiply;
+    top:0;
+    left:0;
+    background: url(../assets/images/pattern-tile.png);
+    z-index: z4;
+    content: "";
+    pointer-events:none;
+  }
 }
 
 .layer.layer--splash .splash {

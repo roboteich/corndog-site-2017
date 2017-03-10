@@ -131,18 +131,26 @@ ul {
 
 @include generate-breakpoint-prefixes {
   &text-1 {
-    font: $text-1;
+    font-size: $text-1;
   }
 
   &text-2 {
-    font: $text-1;
+    font-size: $text-2;
   }
 
   &text-3 {
-    font: $text-1;
+    font-size: $text-3;
   }
 
   &text-4 {
-    font: $text-1;
+    font-size: $text-4;
+  }
+
+  &text-5 {
+    font-size: $text-4;
+  }
+
+  &text-6 {
+    font-size: $text-4;
   }
 }

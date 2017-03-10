@@ -2,11 +2,32 @@
   text-transform: uppercase;
   text-align: center;
   line-height: 1;
+  font-weight: $bold;
+  color: $color-white;
+  transition: background-color .35s ease-in-out;
+
+  &:hover {
+    color:$color-white;
+  }
 
   &.button--primary {
-    font-weight: $bold;
-    color: $color-white;
     background-color: $color-gold;
+    &::after {
+      background-color: $color-gold-darker;
+    }
+    &::before {
+      background-color: $color-gold-darkest;
+    }
+  }
+
+  &.button--secondary {
+    background-color: $color-pink;
+    &::after {
+      background-color: $color-pink-darker;
+    }
+    &::before {
+      background-color: $color-pink-darkest;
+    }
   }
 
   &.button--large {
@@ -20,5 +41,54 @@
         padding: $space-3 $space-4;
     }
 
+  }
+
+  &.button--block {
+    display: inline-block;
+    margin: 0 10px 10px 0;
+    position:relative;
+
+    &, &:hover:active {
+      transform: translateZ(0);
+    }
+
+    &, &::after, &::before {
+      transition: all .3s $easeOutBack;
+    }
+
+    &::after, &::before {
+      position:absolute;
+      display:block;
+      content: "";
+    }
+
+    &::before, &:hover:active::before {
+      left:100%;
+      top:0;
+      height: 100%;
+      width: $space-1;
+      transform:skewY(45deg);
+      transform-origin: 0 0;
+    }
+
+    &::after, &:hover:active::after {
+      left:0;
+      top:100%;
+      width:100%;
+      height:$space-1;
+      transform: skewX(45deg);
+      transform-origin: 0 0;
+    }
+
+
+    &:hover {
+      transform: translate3d(-$space-05, -$space-05, 0);
+      &::before {
+        transform: skewY(45deg) scale3d(1.5, 1, 1);
+      }
+      &::after {
+        transform: skewX(45deg) scale3d(1, 1.5, 1);
+      }
+    }
   }
 }

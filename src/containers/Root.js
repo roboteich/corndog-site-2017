@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
-import { getBlitzedScene } from '../../reducers';
-import { isBlitzing } from '../../reducers/blitz';
-import Splash from '../../components/Splash';
+import * as actions from '../actions';
+import { getBlitzedScene } from '../reducers';
+import { isBlitzing } from '../reducers/blitz';
+import Splash from '../components/Splash';
+import Blitz from '../components/Blitz';
 
 class Root extends Component {
 
@@ -43,14 +44,10 @@ class Root extends Component {
           { !this.props.ready && (
             <Splash onStartClick={this.handleSplashStartClick} />
           )}
-          <section className="layer layer--blitz">
-            <div className="layer__body blitz" onClick={this.handleBlitzToggle}>
-              <img alt="corndog" className="blitz__img" src={activeSceneSrc} />
-              <div className="blitz__info button button--primary">
-                { this.props.blitz ? "stop blitz" : "start blitz" }
-              </div>
-            </div>
-          </section>
+          <Blitz
+            onBlitzToggle={this.handleBlitzToggle}
+            srcURL={activeSceneSrc}
+            isBlitzing={this.props.blitz} />
         </article>
       </div>
     );
