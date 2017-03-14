@@ -1,0 +1,143 @@
+// Styling Cross-Browser Compatible Range Inputs with Sass
+// Github: https://github.com/darlanrod/input-range-sass
+// Author: Darlan Rod https://github.com/darlanrod
+// Version 1.4.1
+// MIT License
+
+$track-color: $color-gold;
+$thumb-color: url(../assets/images/slider-thumb.png) left top no-repeat;
+
+$thumb-radius: 0;
+$thumb-height: 137px;
+$thumb-width: 46px;
+// $thumb-shadow-size: $space-05;
+// $thumb-shadow-blur: $space-05;
+// $thumb-shadow-color: rgba(0, 0, 0, .2) !default;
+$thumb-border-width: 0; //2px !default;
+// $thumb-border-color: #eceff1 !default;
+
+$track-width: 100% !default;
+$track-height: $space-05 + $space-1 !default;
+// $track-shadow-size: 1px !default;
+// $track-shadow-blur: 1px !default;
+// $track-shadow-color: rgba(0, 0, 0, .2) !default;
+$track-border-width: 0; //2px !default;
+// $track-border-color: #cfd8dc !default;
+
+$track-radius: 0 !default;
+$contrast: 5% !default;
+
+@mixin shadow($shadow-size, $shadow-blur, $shadow-color) {
+  box-shadow: $shadow-size $shadow-size $shadow-blur $shadow-color, 0 0 $shadow-size lighten($shadow-color, 5%);
+}
+
+@mixin track {
+  cursor: pointer;
+  height: $track-height;
+  transition: all .2s ease;
+  width: $track-width;
+}
+
+@mixin thumb {
+  background: $thumb-color;
+  border: none; //$thumb-border-width solid $thumb-border-color;
+  border-radius: $thumb-radius;
+  cursor: pointer;
+  height: $thumb-height;
+  width: $thumb-width;
+  transform: translate(-$space-05);
+}
+
+[type='range'] {
+  -webkit-appearance: none;
+  margin: $thumb-height / 2 0;
+  width: $track-width;
+
+  &:focus {
+    outline: 0;
+
+    &::-webkit-slider-runnable-track {
+      background: lighten($track-color, $contrast);
+    }
+
+    &::-ms-fill-lower {
+      background: $track-color;
+    }
+
+    &::-ms-fill-upper {
+      background: lighten($track-color, $contrast);
+    }
+  }
+
+  &::after, &::before {
+    display: block;
+    text-align: center;
+    font-weight: $bold;
+    font-size: $space-3 + $space-05;
+    color: $color-white;
+    line-height: $space-3;
+    width: $space-3 + $space-05;
+    height: $space-3 + $space-05;
+    border-radius: ($space-3 + $space-05) / 2;
+    background: $color-pink;
+  }
+
+  &::before {
+    content: "-";
+    transform:translate($space-05);
+  }
+
+  &::after {
+    content: "+";
+    transform:translate(-$space-05);
+  }
+
+  &::-webkit-slider-runnable-track {
+    @include track;
+    background: $track-color;
+    border: none; //$track-border-width solid $track-border-color;
+    border-radius: $track-radius;
+  }
+
+  &::-webkit-slider-thumb {
+    @include thumb;
+    -webkit-appearance: none;
+    margin-top: ((-$track-border-width * 2 + $track-height) / 2) - ($thumb-height / 2);
+  }
+
+  &::-moz-range-track {
+    @include track;
+    background: $track-color;
+    border: none; //$track-border-width solid $track-border-color;
+    border-radius: $track-radius;
+  }
+
+  &::-moz-range-thumb {
+    @include thumb;
+  }
+
+  &::-ms-track {
+    @include track;
+    background: transparent;
+    border-color: transparent;
+    border-width: 0; //($thumb-height / 2) 0;
+    color: transparent;
+  }
+
+  &::-ms-fill-lower {
+    background: darken($track-color, $contrast);
+    border: none; //$track-border-width solid $track-border-color;
+    border-radius: $track-radius * 2;
+  }
+
+  &::-ms-fill-upper {
+    background: $track-color;
+    border: none; //$track-border-width solid $track-border-color;
+    border-radius: $track-radius * 2;
+  }
+
+  &::-ms-thumb {
+    @include thumb;
+    margin-top: 0;
+  }
+}

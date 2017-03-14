@@ -5,10 +5,9 @@
     height:100%;
     position:absolute;
     display:block;
-    //mix-blend-mode: multiply;
     top:0;
     left:0;
-    background: url(../assets/images/pattern-tile.png);
+    background: url(../assets/images/pattern-tile-sm.png);
     z-index: z4;
     content: "";
     pointer-events:none;
@@ -31,12 +30,26 @@
     position:relative;
     width: 100%;
 
-    &::before {
+    &::after {
       width:100%;
-      padding-top:38%;
+      padding-top:38.4%;
       display:block;
       content:"";
     }
+    //
+    //
+    // &::before {
+    //   position:absolute;
+    //   top:0;
+    //   left:50%;
+    //   transform: translate3d(-50%, 0, 0);
+    //   height: 100vh;
+    //   display: block;
+    //   width: 50%;
+    //   content:"";
+    //   background: url(../assets/images/sticks.gif);
+    //   background-size: contain;
+    // }
 
   }
 

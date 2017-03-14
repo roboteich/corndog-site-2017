@@ -5,28 +5,41 @@
   font-weight: $bold;
   color: $color-white;
   transition: background-color .35s ease-in-out;
+  padding: ($space-1 + $space-05) $space-3;
 
   &:hover {
-    color:$color-white;
+    color: $color-white;
   }
 
   &.button--primary {
     background-color: $color-gold;
+    color: $color-gold-darkest;
+
+    &:hover {
+      color: $color-gold-darkest;
+    }
+
     &::after {
-      background-color: $color-gold-darker;
+      background-color: $color-gold-darkest;
     }
     &::before {
-      background-color: $color-gold-darkest;
+      background-color: $color-gold-darker;
     }
   }
 
   &.button--secondary {
     background-color: $color-pink;
+    color: $color-pink-darkest;
+
+    &:hover {
+      color: $color-pink-darkest;
+    }
+
     &::after {
-      background-color: $color-pink-darker;
+      background-color: $color-pink-darkest;
     }
     &::before {
-      background-color: $color-pink-darkest;
+      background-color: $color-pink-darker;
     }
   }
 
@@ -45,7 +58,7 @@
 
   &.button--block {
     display: inline-block;
-    margin: 0 10px 10px 0;
+    margin: 0 5px 5px 0;
     position:relative;
 
     &, &:hover:active {
@@ -66,7 +79,7 @@
       left:100%;
       top:0;
       height: 100%;
-      width: $space-1;
+      width: $space-05;
       transform:skewY(45deg);
       transform-origin: 0 0;
     }
@@ -75,9 +88,32 @@
       left:0;
       top:100%;
       width:100%;
-      height:$space-1;
+      height:$space-05;
       transform: skewX(45deg);
       transform-origin: 0 0;
+    }
+
+
+    &:hover {
+      transform: translate3d(-$space-05, -$space-05, 0);
+      &::before {
+        transform: skewY(45deg) scale3d(2, 1, 1);
+      }
+      &::after {
+        transform: skewX(45deg) scale3d(1, 2, 1);
+      }
+    }
+  }
+
+  &.button--large.button--block {
+    margin: 0 10px 10px 0;
+
+    &::before, &:hover:active::before {
+      width: $space-1;
+    }
+
+    &::after, &:hover:active::after {
+      height:$space-1;
     }
 
 

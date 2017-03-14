@@ -1,0 +1,57 @@
+.slide-enter {
+  transform: translate3d(0, -100%, 0);
+}
+
+.slide-enter.slide-enter-active {
+  transform: translate3d(0, 0, 0);
+  transition: transform .55s $easeOutBack;
+}
+
+.slide-leave {
+  transform: translate3d(0, 0, 0);
+}
+
+.slide-leave.slide-leave-active {
+  transform: translate3d(0, 100%, 0);
+  transition: transform .55s $easeInBack;
+}
+
+.pop-enter {
+  transform: scale3d(.5, .5, 1);
+  transition: opacity .15s $easeOutCirc, transform .25s $easeOutBack;
+  opacity: 0.01;
+}
+
+.pop-enter.pop-enter-active {
+  transform: scale3d(1, 1, 1);
+  opacity: 1;
+}
+
+.pop-leave {
+  transform: scale3d(1, 1, 1);
+  opacity: 1;
+}
+
+.pop-leave-active {
+  transform: scale3d(.5, .5, 1);
+  opacity: 0.01;
+  transition: opacity .25s $easeInOutCirc, transform .25s $easeInOutBack;
+}
+
+.dissolve-enter {
+  transition: opacity .15s $easeOutCirc;
+  opacity: 0.01;
+}
+
+.dissolve-enter.dissolve-enter-active {
+  opacity: 1;
+}
+
+.dissolve-leave {
+  opacity: 1;
+}
+
+.dissolve-leave-active {
+  opacity: 0.01;
+  transition: opacity .45s $easeOutCirc;
+}

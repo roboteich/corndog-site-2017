@@ -3,18 +3,24 @@ import scenes, { getLoadedScenes } from './scenes';
 import ready from './ready';
 import preload from './preload';
 import blitz from './blitz';
+import editor from './editor';
+import share from './share';
 
 const corndog = combineReducers({
   preload,
   ready,
   scenes,
-  blitz
+  blitz,
+  editor,
+  share
 });
 
 export default corndog;
 
+export const getBlitzedIndex = (state) => {
+  return state.blitz.count % getLoadedScenes(state.scenes).length;
+}
+
 export const getBlitzedScene = (state) => {
-  const loadedScenes = getLoadedScenes(state.scenes);
-  const activeIndex = state.blitz.count % loadedScenes.length;
-  return loadedScenes[activeIndex];
+  return getLoadedScenes(state.scenes)[getBlitzedIndex(state)];
 }

@@ -3,7 +3,9 @@
 // thunk actionCreators look like (args) => (dispatch, getState) => {type}
 
 import { isBlitzing } from '../reducers/blitz';
+import { getBlitzedScene, getBlitzedIndex } from '../reducers';
 import { loadSceneDataURL } from '../lib/sceneService';
+import { loadFaceDataURL } from '../lib/faceService';
 
 
 // scene load actionCreators
@@ -70,4 +72,61 @@ export const startBlitz = () => (dispatch, getState) => {
 export const stopBlitz = () => (dispatch, getState) => {
   clearInterval(getState().blitz.interval);
   dispatch({ type: 'BLITZ_STOP' });
+}
+
+// face actionCreators
+//--------------------------
+
+export const loadFaceAndEdit = () => (dispatch, getState) => {
+  if(getState().editor.open) {
+    return
+  }
+
+  loadFaceDataURL().then(faceDataURL => {
+    console.log('faceDataURLLoaded');
+    dispatch({
+      type: 'FACE_EDIT_START',
+      faceDataURL
+    });
+  });
+
+}
+
+export const cancelFaceEditor = () => ({
+    type: 'FACE_EDIT_CANCEL'
+});
+
+export const mergeFace = (faceEditorImage = '') => (dispatch, getState) => {
+
+  console.log(faceEditorImage);
+  //get current scene
+  const currentState = getState();
+  const activeScene = getBlitzedScene(currentState);
+  const activeIndex = getBlitzedIndex(currentState);
+  const faceTarget = activeScene.faceTarget;
+
+  //draw scene in image
+  const sceneImg = document.createElement("img");
+  sceneImg.src = activeScene.srcDataURL;
+
+  //create a canvas
+  //draw scene into canvas
+  const composite = document.createElement("canvas");
+  composite.width = sceneImg.naturalWidth;
+  composite.height = sceneImg.naturalHeight;
+  const compositeCtx = composite.getContext("2d");
+
+  compositeCtx.drawImage(sceneImg, 0, 0);
+  compositeCtx.globalCompositeOperation = 'hard-light';
+  compositeCtx.drawImage(faceEditorImage, faceTarget.x, faceTarget.y, faceTarget.w, faceTarget.h);
+
+  const compositeDataURL = composite.toDataURL();
+  window.open(compositeDataURL, '_blank');
+
+  dispatch({
+    type:'FACE_EDIT_COMPLETE',
+    compositeDataURL,
+    index: activeIndex
+  })
+
 }

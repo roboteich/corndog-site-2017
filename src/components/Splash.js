@@ -1,5 +1,5 @@
 import React from 'react';
-import CorndogTitle from '../assets/images/site-title.png';
+import CorndogTitle from '../assets/images/site-title.gif';
 
 const Splash = (props) => {
 
@@ -8,10 +8,12 @@ const Splash = (props) => {
       <div className="layer__body splash xs-p3 lg-p6">
         <h1 className="splash__heading xs-text-3 heavy xs-m0 xs-mb2 lg-mb6">NATIONAL <span className="no-wrap">CORNDOG DAY</span></h1>
         <div className="splash__hero xs-mb2 lg-mb6">
-          <img alt="corndog" className="splash__hero-image" src={CorndogTitle} />
+          <div className="splash__hero-inner">
+            <img alt="corndog" className="splash__hero-image" src={CorndogTitle} />
+          </div>
         </div>
         <a href="#" onClick={props.onStartClick} className="splash__start-btn button button--large button--primary button--block">
-          Put your mug on a dog
+          Put your mug <span className="no-wrap">on a dog</span>
         </a>
       </div>
     </section>

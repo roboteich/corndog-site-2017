@@ -2,20 +2,19 @@ import kanye from '../assets/scenes/kanye.png';
 import drake from '../assets/scenes/drake.png';
 import tub from '../assets/scenes/tub.png';
 
-const defaultScene = (srcURL, x = 0, y = 0, w = 0, h = 0) => {
+const defaultScene = (srcURL, x = 0, y = 0, w = 0, h = 0, rotation = 0) => {
   return {
     srcURL,
     srcDataURL: undefined,
-    faceBounds: {x, y, w, h},
-    faceDataURL: undefined,
+    faceTarget: {x, y, w, h, rotation},
     compositeDataURL: undefined
   }
 }
 
 const defaultScenes = [
-  defaultScene(kanye),
-  defaultScene(drake),
-  defaultScene(tub)
+  defaultScene(kanye, 378, 275, 244, 244),
+  defaultScene(drake, 316, 389, 100, 100),
+  defaultScene(tub, 440, 192, 200, 200)
 ];
 
 //helpers
@@ -34,12 +33,11 @@ export default (state = defaultScenes, action) => {
     case 'RECEIVE_SCENE':
       return updateSceneAtIndex(state, action.index,
         { srcDataURL: action.srcDataURL});
-    case 'SET_FACE_DATA':
+    case 'FACE_EDIT_COMPLETE':
       return updateSceneAtIndex(state, action.index,
-        { faceDataURL: action.faceDataURL});
-    case 'SET_COMPOSITE_DATA':
-      return updateSceneAtIndex(state, action.index,
-        { compositeDataURL: action.faceDataURL});
+        {
+          compositeDataURL: action.compositeDataURL
+        });
     default:
       return state;
   }

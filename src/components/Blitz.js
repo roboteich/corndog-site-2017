@@ -1,21 +1,27 @@
 import React from 'react';
+import {cancelEventAndRun} from '../lib/eventHelpers';
 
 const Blitz = (props) => {
+
+  const composite = (props.compositeURL);
+
   return (
-    <section className="layer layer--blitz">
-      <div className="layer__body blitz">
-        <div onClick={props.onBlitzToggle} className="blitz__matte">
-          <img alt="corndog" className="blitz__img" src={props.srcURL} />
+    <section className="layer layer--blitz xs-z1">
+      <div className="layer__body blitz xs-relative">
+        <div onClick={props.onBlitzToggle} className="blitz__matte xs-absolute">
+          <img alt="corndog" className="blitz__img xs-absolute" src={(props.compositeURL) ? props.compositeURL : props.srcURL} />
         </div>
-        <div className="blitz__info xs-p3">
-          <p className="blitz__info-message xs-m0">
-            Tap to { props.isBlitzing ? "stop blitz" : "start blitz" }
-          </p>
-        </div>
-        <div className="blitz__controls xs-p3">
-          <a onClick={props.onFaceClick} className="button button--secondary xs-m0">Add a face</a>
-          <a onClick={props.onShareClick} className="button button--primary xs-m0">Share</a>
-        </div>
+        <p className="blitz__info xs-absolute xs-t3 xs-l3">
+            Tap to { props.isBlitzing ? "Stop" : "Start" }
+        </p>
+        { !props.isBlitzing && (
+          <div className="blitz__controls xs-absolute xs-b3 xs-full-width xs-pr3 xs-pl3 xs-clearfix">
+            <a href="#" onClick={cancelEventAndRun(props.onEditClick)} className="blitz__edit button button--secondary button--block xs-float-left">
+            { composite ? "Change Face" : "Add Your Face" }
+            </a>
+            <a href="#" onClick={cancelEventAndRun(props.onShareClick)} className="blitz__share button button--primary button--block xs-float-right">Share</a>
+          </div>
+        )}
       </div>
     </section>
   )
@@ -26,6 +32,7 @@ Blitz.propTypes = {
   onFaceClick: React.PropTypes.func,
   onShareClick: React.PropTypes.func,
   srcURL: React.PropTypes.string,
+  compositeURL: React.PropTypes.string,
   isBlitzing: React.PropTypes.bool
 }
 
