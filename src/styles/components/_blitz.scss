@@ -6,16 +6,15 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
+    background-position: 50% 50%;
+    background-size:contain;
+    background-repeat: no-repeat;
   }
 
   .blitz__img {
-    top:50%;
-    left:50%;
-    transform: translate3d(-50%, -50%, 0);
-    width: 100%;
-    height: 100%;
-    max-height:calc(100vh - $space-1);
-    max-width:100vw;
+    width:100%;
+    height:100%;
+
   }
 
   .blitz__info {

@@ -1,3 +1,5 @@
+import loadImage from 'blueimp-load-image';
+
 export const loadFaceDataURL = () => {
 
   return Promise.resolve(
@@ -7,7 +9,6 @@ export const loadFaceDataURL = () => {
       fileInput.setAttribute('accept', 'image/*');
       fileInput.value = null;
       fileInput.onchange = (e) => {
-        console.log('onchange');
         document.body.removeChild(fileInput);
         resolve(e.target.files[0]);
       };
@@ -18,17 +19,12 @@ export const loadFaceDataURL = () => {
       evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null)
       fileInput.dispatchEvent(evt);
     }).then(file => {
-      console.log('onresolve 1');
       return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.addEventListener('load', (e) => {
-          console.log('onresolve 2');
-          resolve(e.target.result)
-        });
-        reader.addEventListener('error', (e) => {
-          console.log('error 2', reader.error);
-        });
-        reader.readAsDataURL(file);
+        loadImage(
+          file,
+          (canvas) => resolve(canvas.toDataURL()),
+          {orientation:true, canvas:true}
+        );
       })
     })
   );
@@ -50,6 +46,17 @@ export const maskFace = (faceCanvas, maskImage) => {
 
   ctx.globalCompositeOperation = 'destination-out';
   ctx.drawImage(maskImage, 0, 0, canvas.width, canvas.height);
+
+  return canvas;
+}
+
+export const colorizeFace = (faceCanvas, color) => {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  ctx.fillStyle = color;
+  ctx.fillRect(0,0,canvas.width, canvas.height);
+  ctx.globalCompositeOperation = 'luminosity';
+  ctx.drawImage(faceCanvas, 0, 0, canvas.width, canvas.height);
 
   return canvas;
 }

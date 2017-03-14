@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "babel-polyfill": "^6.23.0",
+    "blueimp-load-image": "^2.12.2",
     "file-dialog": "0.0.4",
     "react": "15.4.2",
     "react-addons-css-transition-group": "^15.4.2",

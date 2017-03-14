@@ -3,7 +3,6 @@
 // thunk actionCreators look like (args) => (dispatch, getState) => {type}
 
 import { isBlitzing } from '../reducers/blitz';
-import { getBlitzedScene, getBlitzedIndex } from '../reducers';
 import { loadSceneDataURL } from '../lib/sceneService';
 import { loadFaceDataURL } from '../lib/faceService';
 
@@ -98,35 +97,31 @@ export const cancelFaceEditor = () => ({
 
 export const mergeFace = (faceEditorImage = '') => (dispatch, getState) => {
 
-  console.log(faceEditorImage);
-  //get current scene
-  const currentState = getState();
-  const activeScene = getBlitzedScene(currentState);
-  const activeIndex = getBlitzedIndex(currentState);
-  const faceTarget = activeScene.faceTarget;
+  const scenes = getState().scenes;
+  scenes.forEach((scene, index) => {
+    const faceTarget = scene.faceTarget;
 
-  //draw scene in image
-  const sceneImg = document.createElement("img");
-  sceneImg.src = activeScene.srcDataURL;
+    //draw scene in image
+    const sceneImg = document.createElement("img");
+    sceneImg.src = scene.srcDataURL;
 
-  //create a canvas
-  //draw scene into canvas
-  const composite = document.createElement("canvas");
-  composite.width = sceneImg.naturalWidth;
-  composite.height = sceneImg.naturalHeight;
-  const compositeCtx = composite.getContext("2d");
+    //create a canvas
+    //draw scene into canvas
+    const composite = document.createElement("canvas");
+    composite.width = sceneImg.naturalWidth;
+    composite.height = sceneImg.naturalHeight;
+    const compositeCtx = composite.getContext("2d");
 
-  compositeCtx.drawImage(sceneImg, 0, 0);
-  compositeCtx.globalCompositeOperation = 'hard-light';
-  compositeCtx.drawImage(faceEditorImage, faceTarget.x, faceTarget.y, faceTarget.w, faceTarget.h);
+    compositeCtx.drawImage(sceneImg, 0, 0);
+    compositeCtx.globalCompositeOperation = 'hard-light';
+    compositeCtx.drawImage(faceEditorImage, faceTarget.x, faceTarget.y, faceTarget.w, faceTarget.h);
 
-  const compositeDataURL = composite.toDataURL();
-  window.open(compositeDataURL, '_blank');
+    const compositeDataURL = composite.toDataURL();
 
-  dispatch({
-    type:'FACE_EDIT_COMPLETE',
-    compositeDataURL,
-    index: activeIndex
-  })
-
+    dispatch({
+      type:'FACE_EDIT_COMPLETE',
+      compositeDataURL,
+      index: index
+    })
+  });
 }

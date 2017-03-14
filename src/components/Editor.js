@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactAvatarEditor from 'react-avatar-editor';
 import {cancelEventAndRun} from '../lib/eventHelpers';
-import faceMask from '../assets/images/face-mask.png';
+import faceMask from '../assets/images/face-mask-feathered.png';
 import * as faceService from '../lib/faceService';
 
 class Editor extends Component {
@@ -24,13 +24,10 @@ class Editor extends Component {
 
   handleSave = () => {
     let editorImage = this.editor.getImageScaledToCanvas();
-    // let editorCtx = editorImage.getContext("2d");
-    //apply mask
-    let maskedImage = faceService.maskFace(editorImage, this.mask);
-    //convert to b+w
-    //let grayMaskedImage = faceService.grayscaleFace(maskedImage);
-    // //jack up contrast
-    // let contrastImage = faceService.contrastFace(grayMaskedImage, 20);
+    let grayImage = faceService.grayscaleFace(editorImage);
+    let contrastImage = faceService.contrastFace(grayImage, 10);
+    let colorizedImage = faceService.colorizeFace(contrastImage, "#543b06");
+    let maskedImage = faceService.maskFace(colorizedImage, this.mask);
 
     this.props.onConfirmClick(maskedImage);
   }
