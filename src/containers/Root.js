@@ -23,6 +23,9 @@ class Root extends Component {
   }
 
   handleBlitzToggle = () => {
+
+    console.log('blitz toggle', this.props.blitz);
+
     (this.props.blitz ?
       this.props.actions.stopBlitz() :
       this.props.actions.startBlitz())
@@ -47,8 +50,6 @@ class Root extends Component {
     //render load progress, readyState
     const activeSceneSrc = (this.props.activeScene) ? this.props.activeScene.srcDataURL : "";
     const activeSceneCompositeSrc = (this.props.activeScene) ? this.props.activeScene.compositeDataURL : null;
-    const portraitOffset = this.props.activeScene.portraitOffset;
-    const landscapeRepeat = this.props.activeScene.landscapeRepeat;
 
     return(
       <div className="site-container xs-full-height xs-fit">
@@ -65,11 +66,9 @@ class Root extends Component {
           </ReactCSSTransitionGroup>
           <Blitz
             onBlitzToggle={this.handleBlitzToggle}
-            srcURL={activeSceneSrc}
-            compositeURL={activeSceneCompositeSrc}
+            activeScene={this.props.activeScene}
+            scenes={this.props.scenes}
             orientation={this.props.screen.orientation}
-            portraitOffset={portraitOffset}
-            landscapeRepeat={landscapeRepeat}
             isBlitzing={this.props.blitz}
             onEditClick={this.props.actions.loadFaceAndEdit}
             onShareClick={this.props.actions.startShare} />

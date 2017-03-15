@@ -59,7 +59,7 @@ class Editor extends Component {
               type="range"
               onChange={this.handleScale}
               min="1"
-              max="5"
+              max="8"
               step="0.01"
               defaultValue="1"
               />

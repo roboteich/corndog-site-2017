@@ -6,7 +6,12 @@
   .share__preview {
     overflow: hidden;
     text-align: center;
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-color: $color-black;
     flex: 1 1;
+    width:100%;
   }
 
   .share__preview-img {

@@ -9,8 +9,7 @@ const Share = (props) => {
   return (
     <section className="layer layer--share xs-z1">
       <div className="layer__body share">
-        <div className="share__preview xs-pt2 md-pt3 lg-pt4">
-          <img className="share__preview-img" src={dataURL} alt="corndog"/>
+        <div className="share__preview xs-pt2 md-pt3 lg-pt4" style={{backgroundImage:'url("'+ dataURL + '")'}}>
         </div>
         <h2 className="share__heading">
           Share your masterpiece
