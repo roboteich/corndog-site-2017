@@ -5,10 +5,10 @@
 // MIT License
 
 $track-color: $color-gold;
-$thumb-color: url(../assets/images/slider-thumb.png) left top no-repeat;
+$thumb-color: url(../assets/images/slider-thumb.png) left top/contain no-repeat;
 
 $thumb-radius: 0;
-$thumb-height: 137px;
+$thumb-height: 100px;
 $thumb-width: 46px;
 // $thumb-shadow-size: $space-05;
 // $thumb-shadow-blur: $space-05;

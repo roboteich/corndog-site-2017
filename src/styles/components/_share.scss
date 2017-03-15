@@ -1,0 +1,38 @@
+.share {
+
+  background: $color-white;
+  text-align: center;
+
+  .share__preview {
+    overflow: hidden;
+    text-align: center;
+    flex: 1 1;
+  }
+
+  .share__preview-img {
+    height:100%;
+  }
+
+  .share__heading, .share__actions {
+    flex: 0 0;
+  }
+
+  .share__heading {
+    margin:$space-3;
+  }
+
+  .share__actions {
+    padding: 0 $space-3 $space-2;
+    text-align: center;
+    .button {
+      margin: $space-1;
+    }
+  }
+
+  .share__controls {
+    position:absolute;
+    top:$space-2;
+    right:$space-2;
+  }
+
+}

@@ -2,21 +2,51 @@
   background-color:$color-white;
 
   & .editor {
-    max-width: 320px;
+    // max-width: 375px;
     margin: 0 auto;
+    align-items: stretch;
+
   }
 
-  & .editor__mask {
-    opacity: .6;
-    pointer-events:none;
+  & .editor__preview {
+    flex: 1 0;
+
+    > canvas, .editor__mask {
+      display:block;
+      position:relative;
+      transform: translate3d(-50%, 0, 0);
+      left:50%;
+      height:100%;
+      max-height: 100vw;
+    }
+
+    .editor__mask {
+      position:absolute;
+      top:0;
+      left:50%;
+      transform: translate3d(-50%, 0, 0);
+      opacity: .6;
+      pointer-events:none;
+      width:auto;
+      height:100%;
+      max-height:100vw;
+    }
+  }
+
+  & .editor__controls, & .editor__actions {
+    max-width: 675px;
+    margin: 0 auto;
+    width:100%;
   }
 
   & .editor__controls {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
+    flex: 0 0;
+    padding: 0 $space-2;
+  }
+
+  & .editor__actions {
+    flex: 0 0;
+    padding: 0 $space-2 $space-2;
   }
 
 }

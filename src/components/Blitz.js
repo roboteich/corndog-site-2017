@@ -3,13 +3,33 @@ import {cancelEventAndRun} from '../lib/eventHelpers';
 
 const Blitz = (props) => {
 
-
-  console.log('render blitz');
-
+  const isLandscape = ('landscape' === props.orientation.toLowerCase());
   const isSrc = !(props.compositeURL);
-  const matteImageURL = (isSrc) ? props.srcURL : props.compositeURL; 
+  const matteImageURL = (isSrc) ? props.srcURL : props.compositeURL;
+  const backgroundImage = "url('" + matteImageURL + "')";
+  let backgroundPosition = (!isLandscape) ? props.portraitOffset : null;
+  let backgroundRepeat = 'no-repeat';
+  let backgroundSize = 'cover';
+  let matteClassName = 'blitz__matte';
+
+  // if(!isLandscape && !props.isBlitzing) {
+  //   matteClassName += ' blitz__matte--pan';
+  // }
+
+  console.log('blitz render', isLandscape, props.isBlitzing, matteClassName);
+
+  if (isLandscape && props.landscapeRepeat) {
+    backgroundSize = 'contain';
+    backgroundRepeat = 'repeat-x';
+    backgroundPosition = '0% top';
+  }
+
+
   const matteStyle = {
-    backgroundImage: "url('" + matteImageURL + "')"
+    backgroundImage,
+    backgroundPosition,
+    backgroundRepeat,
+    backgroundSize
   }
 
   return (
@@ -17,7 +37,7 @@ const Blitz = (props) => {
       <div className="layer__body blitz xs-relative">
         <div
           onClick={props.onBlitzToggle}
-          className="blitz__matte xs-absolute"
+          className={matteClassName}
           style={matteStyle}
         />
         <p className="blitz__info xs-absolute xs-t3 xs-l3">
@@ -42,7 +62,9 @@ Blitz.propTypes = {
   onShareClick: React.PropTypes.func,
   srcURL: React.PropTypes.string,
   compositeURL: React.PropTypes.string,
-  isBlitzing: React.PropTypes.bool
+  isBlitzing: React.PropTypes.bool,
+  landscapeRepeat: React.PropTypes.bool,
+  portraitOffset: React.PropTypes.string
 }
 
 export default Blitz;

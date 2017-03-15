@@ -5,6 +5,7 @@ import { getBlitzedScene } from '../reducers';
 import { isBlitzing } from '../reducers/blitz';
 import Splash from '../components/Splash';
 import Blitz from '../components/Blitz';
+import Share from '../components/Share';
 import Editor from '../components/Editor';
 import FirstChild from '../components/FirstChild';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -31,6 +32,13 @@ class Root extends Component {
   componentDidMount() {
     //kickoff image load
     this.props.actions.preload();
+    this.props.actions.measureScreen();
+    window.addEventListener("resize", this.handleResize);
+  }
+
+  handleResize = () => {
+    console.log('handleResize');
+    this.props.actions.measureScreen();
   }
 
 
@@ -39,6 +47,8 @@ class Root extends Component {
     //render load progress, readyState
     const activeSceneSrc = (this.props.activeScene) ? this.props.activeScene.srcDataURL : "";
     const activeSceneCompositeSrc = (this.props.activeScene) ? this.props.activeScene.compositeDataURL : null;
+    const portraitOffset = this.props.activeScene.portraitOffset;
+    const landscapeRepeat = this.props.activeScene.landscapeRepeat;
 
     return(
       <div className="site-container xs-full-height xs-fit">
@@ -57,8 +67,12 @@ class Root extends Component {
             onBlitzToggle={this.handleBlitzToggle}
             srcURL={activeSceneSrc}
             compositeURL={activeSceneCompositeSrc}
+            orientation={this.props.screen.orientation}
+            portraitOffset={portraitOffset}
+            landscapeRepeat={landscapeRepeat}
             isBlitzing={this.props.blitz}
-            onEditClick={this.props.actions.loadFaceAndEdit} />
+            onEditClick={this.props.actions.loadFaceAndEdit}
+            onShareClick={this.props.actions.startShare} />
           <ReactCSSTransitionGroup component={FirstChild}
             transitionName="pop"
             transitionEnterTimeout={350}
@@ -69,6 +83,13 @@ class Root extends Component {
               faceSrcURL={this.props.editor.faceDataURL}
               onConfirmClick={this.props.actions.mergeFace}
               onCancelClick={this.props.actions.cancelFaceEditor} />
+          )}
+          { this.props.share && (
+            <Share
+              key="share"
+              srcURL={activeSceneSrc}
+              compositeURL={activeSceneCompositeSrc}
+              onCloseClick={this.props.actions.completeShare} />
           )}
           </ReactCSSTransitionGroup>
 

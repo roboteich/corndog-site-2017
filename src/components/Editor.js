@@ -51,7 +51,7 @@ class Editor extends Component {
               scale={parseFloat(this.state.scale)}
             />
             <img ref={this.setMaskRef} src={faceMask} width="320px" height="320px" alt="mask"
-              className="editor__mask xs-absolute xs-t0 xs-l0"/>
+              className="editor__mask"/>
           </div>
           <div className="editor__controls">
             <input
@@ -63,13 +63,15 @@ class Editor extends Component {
               step="0.01"
               defaultValue="1"
               />
-              <a href="#"
-                onClick={cancelEventAndRun(this.handleCancel)}
-                className="editor__cancel button button--secondary button--block">Cancel</a>
-            <a href="#"
-              onClick={cancelEventAndRun(this.handleSave)}
-              className="editor__confirm button button--primary button--block">Use Face</a>
           </div>
+          <div className="editor__actions clearfix">
+          <a href="#"
+            onClick={cancelEventAndRun(this.handleCancel)}
+            className="editor__cancel button button--secondary button--block xs-float-left">Cancel</a>
+          <a href="#"
+            onClick={cancelEventAndRun(this.handleSave)}
+            className="editor__confirm button button--primary button--block xs-float-right">Use Face</a>
+            </div>
         </div>
       </section>
     );

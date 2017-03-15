@@ -5,6 +5,7 @@ import preload from './preload';
 import blitz from './blitz';
 import editor from './editor';
 import share from './share';
+import screen from './screen';
 
 const corndog = combineReducers({
   preload,
@@ -12,7 +13,8 @@ const corndog = combineReducers({
   scenes,
   blitz,
   editor,
-  share
+  share,
+  screen
 });
 
 export default corndog;

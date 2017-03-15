@@ -7,6 +7,8 @@ export const loadFaceDataURL = () => {
       const fileInput = document.createElement('input');
       fileInput.setAttribute('type', 'file');
       fileInput.setAttribute('accept', 'image/*');
+      fileInput.style.position = 'absolute';
+      fileInput.style.left = '-10000px';
       fileInput.value = null;
       fileInput.onchange = (e) => {
         document.body.removeChild(fileInput);

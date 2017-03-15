@@ -1,5 +1,6 @@
 import React from 'react';
 import CorndogTitle from '../assets/images/site-title.gif';
+import {cancelEventAndRun} from '../lib/eventHelpers';
 
 const Splash = (props) => {
 
@@ -12,7 +13,7 @@ const Splash = (props) => {
             <img alt="corndog" className="splash__hero-image" src={CorndogTitle} />
           </div>
         </div>
-        <a href="#" onClick={props.onStartClick} className="splash__start-btn button button--large button--primary button--block">
+        <a href="#" onClick={cancelEventAndRun(props.onStartClick)} className="splash__start-btn button button--large button--primary button--block">
           Put your mug <span className="no-wrap">on a dog</span>
         </a>
       </div>

@@ -1,20 +1,30 @@
 .blitz {
 
   .blitz__matte {
+    position:absolute;
     top:0;
     bottom: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-position: 50% 50%;
-    background-size:contain;
+    background-position: 50% top;
+    background-size:cover;
     background-repeat: no-repeat;
+    background-color: $color-black;
+
+    &.blitz__matte--pan {
+      animation-name: blitz-pan;
+      animation-duration: 10s;
+      animation-direction:normal;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+
   }
 
   .blitz__img {
     width:100%;
     height:100%;
-
   }
 
   .blitz__info {
@@ -22,5 +32,27 @@
     top: 0;
     left: 0;
     text-transform: uppercase;
+    padding:$space-1 $space-2;
+    background: rgba(0, 0, 0, .5);
+    line-height: 1rem;
+    border-radius: $space-4;
+  }
+}
+
+@keyframes blitz-pan {
+  0% {
+    background-position-x:50%;
+  }
+
+  25% {
+    background-position-x:100%;
+  }
+
+  75% {
+    background-position-x:0%;
+  }
+
+  100% {
+    background-position-x:50%;
   }
 }
