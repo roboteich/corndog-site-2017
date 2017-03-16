@@ -40,14 +40,45 @@
 
   .blitz__info {
     color: $color-white;
-    top: 0;
-    left: 0;
+    position: absolute;
+    top: $space-3;
+    left: $space-3;
+    margin: 0;
+    font-family: $sans;
+    font-weight: bold;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate3d(-50%, -50%, 0);
     text-transform: uppercase;
     padding:$space-1 $space-2;
     background: rgba(0, 0, 0, .5);
-    line-height: 1rem;
+    line-height: 20px;
     border-radius: $space-4;
     pointer-events: none;
+
+    @include solid-breakpoint('md') {
+      line-height: 40px;
+    };
+
+    &.blitz__info--pulse {
+      animation-name: blitz-pulse;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: ease-in-out;
+    }
+
+  }
+
+}
+
+@keyframes blitz-pulse {
+  from {
+    opacity:1;
+  }
+
+  to {
+    opacity:.5;
   }
 }
 

@@ -8,6 +8,8 @@ import Blitz from '../components/Blitz';
 import Share from '../components/Share';
 import Editor from '../components/Editor';
 import FirstChild from '../components/FirstChild';
+import AudioPlayer from '../components/AudioPlayer';
+import AudioToggle from '../components/AudioToggle';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class Root extends Component {
@@ -44,8 +46,6 @@ class Root extends Component {
     this.props.actions.measureScreen();
   }
 
-
-
   render() {
     //render load progress, readyState
     const activeSceneSrc = (this.props.activeScene) ? this.props.activeScene.srcDataURL : "";
@@ -53,8 +53,18 @@ class Root extends Component {
 
     return(
       <div className="site-container xs-full-height xs-fit">
-        <header className="site-header">
-        </header>
+        <AudioPlayer
+          src={process.env.PUBLIC_URL + '/audio/watuthink_corndog.mp3'}
+          progress={this.props.audio.progress}
+          autoPlay={true}
+          onEnded={this.props.actions.audioStopped}
+          onListen={this.props.actions.audioProgress}
+          onPause={this.props.actions.audioStopped}
+          onPlay={this.props.actions.audioPlayed}
+          onCanPlay={this.props.actions.audioCanPlay}
+          command={this.props.audio.command}
+          preload="none"
+        />
         <article className="site-content">
           <ReactCSSTransitionGroup component={FirstChild}
             transitionName="dissolve"
@@ -72,6 +82,18 @@ class Root extends Component {
             isBlitzing={this.props.blitz}
             onEditClick={this.props.actions.loadFaceAndEdit}
             onShareClick={this.props.actions.startShare} />
+            <ReactCSSTransitionGroup component={FirstChild}
+              transitionName="pop"
+              transitionEnterTimeout={350}
+              transitionLeaveTimeout={350}>
+            { this.props.audio.canplay && (
+              <AudioToggle
+                key="toggle"
+                playing={this.props.audio.playing}
+                onToggle={this.props.actions.audioToggle}
+              />
+            )}
+          </ReactCSSTransitionGroup>
           <ReactCSSTransitionGroup component={FirstChild}
             transitionName="pop"
             transitionEnterTimeout={350}
@@ -91,7 +113,6 @@ class Root extends Component {
               onCloseClick={this.props.actions.completeShare} />
           )}
           </ReactCSSTransitionGroup>
-
         </article>
       </div>
     );

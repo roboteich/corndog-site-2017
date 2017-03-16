@@ -53,17 +53,15 @@ const Blitz = (props) => {
         onClick={props.onBlitzToggle}>
           {sceneLayers}
         </div>
-        <p className="blitz__info xs-absolute xs-t3 xs-l3">
+        <p className={"blitz__info blitz__info--pulse"}>
             Tap to { props.isBlitzing ? "Stop" : "Start" }
         </p>
-        { !props.isBlitzing && (
-          <div className="blitz__controls xs-absolute xs-b3 xs-full-width xs-pr3 xs-pl3 xs-clearfix">
-            <a href="#" onClick={cancelEventAndRun(props.onEditClick)} className="blitz__edit button button--secondary button--block xs-float-left">
-            { !activeSrc ? "Change Face" : "Add Your Face" }
-            </a>
-            <a href="#" onClick={cancelEventAndRun(props.onShareClick)} className="blitz__share button button--primary button--block xs-float-right">Share</a>
-          </div>
-        )}
+        <div className="blitz__controls xs-absolute xs-b3 xs-full-width xs-pr3 xs-pl3 xs-clearfix">
+          <a href="#" onClick={cancelEventAndRun(props.onEditClick)} className="blitz__edit button button--secondary button--block xs-float-left">
+          { !activeSrc ? "Change Face" : "Add Your Face" }
+          </a>
+          <a href="#" onClick={cancelEventAndRun(props.onShareClick)} className="blitz__share button button--primary button--block xs-float-right">Share</a>
+        </div>
       </div>
     </section>
   )

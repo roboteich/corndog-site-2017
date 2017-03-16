@@ -22,7 +22,7 @@ const defaultScene = (srcURL, x = 0, y = 0, w = 0, h = 0, rotation = 0, po = "50
   return {
     srcURL,
     srcDataURL: undefined,
-    faceTarget: {x, y, w, h, rotation},
+    faceTarget: {x:x - w*.05, y:y- h*.05, w:w*1.1, h:h*1.1, rotation},
     compositeDataURL: undefined,
     portraitOffset: po,
     landscapeRepeat: lr

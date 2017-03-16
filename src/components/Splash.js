@@ -1,5 +1,5 @@
 import React from 'react';
-import CorndogTitle from '../assets/images/site-title.gif';
+import CorndogTitle from '../assets/images/site-title-graphic.png';
 import {cancelEventAndRun} from '../lib/eventHelpers';
 
 const Splash = (props) => {
@@ -7,8 +7,8 @@ const Splash = (props) => {
   return (
     <section className="layer layer--splash">
       <div className="layer__body splash xs-p3 lg-p6">
-        <h1 className="splash__heading xs-text-3 heavy xs-m0 xs-mb2 lg-mb6">NATIONAL <span className="no-wrap">CORNDOG DAY</span></h1>
-        <div className="splash__hero xs-mb2 lg-mb6">
+        <h1 className="splash__heading xs-text-3 heavy">NATIONAL <span className="no-wrap">CORNDOG DAY</span></h1>
+        <div className="splash__hero">
           <div className="splash__hero-inner">
             <img alt="corndog" className="splash__hero-image" src={CorndogTitle} />
           </div>

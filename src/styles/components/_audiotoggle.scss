@@ -1,0 +1,64 @@
+.audio-toggle {
+  position: absolute !important;
+  right: $space-3;
+  top: $space-3;
+  z-index: $z2;
+  cursor:pointer;
+
+  &.audio-toggle--play {
+    &::before {
+      display:block;
+      position:absolute;
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-left: 10px solid $color-gold;
+      background-color: transparent;
+      top:50%;
+      left:50%;
+      content:"";
+      overflow: hidden;
+      transform-origin: 50% 50%;
+      transform:translate3d(-33%, -50%, 0);
+    }
+
+    @include solid-breakpoint('md') {
+      &::before {
+        border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+        border-left: 15px solid $color-gold;
+      }
+    }
+  }
+
+  &.audio-toggle--pause {
+    &::before, &::after {
+      display:block;
+      position:absolute;
+      width:5px;
+      height: 15px;
+      background-color: $color-gold;
+      top:50%;
+      left:50%;
+      content:"";
+      overflow: hidden;
+      transform-origin: 50% 50%;
+    }
+
+    &::before {
+      transform:translate3d(-150%, -50%, 0);
+    }
+
+    &::after {
+      transform:translate3d(50%, -50%, 0);
+    }
+
+    @include solid-breakpoint('md') {
+      &::before, &::after {
+        width:7px;
+        height: 26px;
+      }
+    }
+  }
+}

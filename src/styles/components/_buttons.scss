@@ -109,7 +109,7 @@
       border-radius: 60px;
     }
 
-    &::before, &::after {
+    &.button--close::before, &.button--close::after {
       content: "";
       display:block;
       transform-origin: 50% 50%;
@@ -125,11 +125,11 @@
       }
     }
 
-    &::before {
+    &.button--close::before {
       transform: translate3d(-50%, -50%, 0) rotate(45deg);
     }
 
-    &::after {
+    &.button--close::after {
       transform: translate3d(-50%, -50%, 0) rotate(-45deg);
     }
   }
@@ -158,7 +158,7 @@
       top:0;
       height: 100%;
       width: $space-05;
-      transform:skewY(45deg);
+      transform: translateY(1px)  skewY(45deg);
       transform-origin: 0 0;
     }
 
@@ -167,7 +167,7 @@
       top:100%;
       width:100%;
       height:$space-05;
-      transform: skewX(45deg);
+      transform:skewX(45deg);
       transform-origin: 0 0;
     }
 

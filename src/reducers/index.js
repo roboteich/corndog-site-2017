@@ -6,6 +6,7 @@ import blitz, {isBlitzing} from './blitz';
 import editor from './editor';
 import share from './share';
 import screen from './screen';
+import audio from './audio';
 
 const corndog = combineReducers({
   preload,
@@ -14,7 +15,8 @@ const corndog = combineReducers({
   blitz,
   editor,
   share,
-  screen
+  screen,
+  audio
 });
 
 export default corndog;

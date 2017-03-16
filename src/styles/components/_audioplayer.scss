@@ -1,0 +1,34 @@
+.audio-progress {
+
+}
+
+
+.audio-player {
+  height:8px;
+  width:100%;
+  overflow: hidden;
+  position:absolute;
+  top:0;
+  left:0;
+  display:block;
+  z-index:$z4;
+
+  .audio-player__audio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    left:-10000px;
+  }
+
+  .audio-player__progress {
+    height:100%;
+    position:absolute;
+    display:block;
+    background-color: $color-gold;
+    top:0;
+    left:0;
+    width:0px;
+    transition:width .2s linear;
+  }
+
+}

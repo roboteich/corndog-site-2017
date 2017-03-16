@@ -40,12 +40,6 @@ body {
  display: flex;
  flex-flow:column;
 
-  .site-header {
-      height:16px;
-      color: white;
-      background-color: $color-gold;
-  }
-
   .site-content {
     flex: 1 0;
     position:relative;
@@ -66,6 +60,8 @@ body {
 @import "./components/buttons";
 @import "./components/layer";
 @import "./components/splash";
+@import "./components/audioplayer";
+@import "./components/audiotoggle";
 @import "./components/blitz";
 @import "./components/share";
 @import "./components/editor";
