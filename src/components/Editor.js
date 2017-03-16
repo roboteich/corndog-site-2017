@@ -29,7 +29,7 @@ class Editor extends Component {
     let colorizedImage = faceService.colorizeFace(contrastImage, "#543b06");
     let maskedImage = faceService.maskFace(colorizedImage, this.mask);
 
-    this.props.onConfirmClick(maskedImage);
+    this.props.onConfirmClick(maskedImage.toDataURL('image/png'));
   }
 
   handleCancel = () => {

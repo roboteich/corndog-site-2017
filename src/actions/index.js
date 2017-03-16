@@ -2,7 +2,7 @@
 // promise actionCreators look like (args) => new Promise((resolve, reject) => resolve({type}))
 // thunk actionCreators look like (args) => (dispatch, getState) => {type}
 
-import { isBlitzing } from '../reducers/blitz';
+import { getIsBlitzing, getBlitzedScene, getBlitzedIndex } from '../reducers';
 import { loadSceneDataURL } from '../lib/sceneService';
 import { loadFaceDataURL } from '../lib/faceService';
 
@@ -35,42 +35,12 @@ const fetchScene = (index) => (dispatch, getState) => {
 
 export const preload = () => (dispatch, getState) => {
   const { scenes } = getState();
-  return Promise
-    .all(scenes.map((scene, index) => dispatch(fetchScene(index))));
-    //.then(() => dispatch(ready()));
-}
 
-
-// blitz actionCreators
-//--------------------------
-
-export const startBlitz = () => (dispatch, getState) => {
-
-  //exit if already blitzing
-  if(isBlitzing(getState().blitz)) {
-    return;
-  }
-
-  const interval = setInterval(() => {
-    const state = getState();
-    //determine the next activeScene
-    let count = state.blitz.count + 1;
-
-    dispatch({
-      type: 'BLITZ_TICK',
-      count
-    });
-  }, 100);
-
-  dispatch({
-    type: 'BLITZ_START',
-    interval
-  });
-}
-
-export const stopBlitz = () => (dispatch, getState) => {
-  clearInterval(getState().blitz.interval);
-  dispatch({ type: 'BLITZ_STOP' });
+  return scenes.reduce((promise, scene, index) => {
+    return promise.then(dispatch(fetchScene(index)));
+  }, Promise.resolve());
+  // return Promise
+  //   .all(scenes.map((scene, index) => dispatch(fetchScene(index))));
 }
 
 // editor actionCreators
@@ -94,50 +64,110 @@ export const cancelFaceEditor = () => ({
     type: 'FACE_EDIT_CANCEL'
 });
 
-export const mergeFace = (faceEditorImage = '') => (dispatch, getState) => {
+export const mergeActiveFace = () => (dispatch, getState) => {
 
-  getState().scenes.forEach((scene, index) => {
+  const state = getState();
+  const editorFaceURL = state.editor.editorFaceURL;
+  const scene = getBlitzedScene(state);
+
+  if (null !== editorFaceURL && null === scene.compositeDataURL) {
+
+    console.log('composite a face');
+
+    const faceEditorImage = document.createElement("img");
+    const index = getBlitzedIndex(state);
     const faceTarget = scene.faceTarget;
 
-    //draw scene in image
-    const sceneImg = document.createElement("img");
-    sceneImg.onload = () => {
+    faceEditorImage.onload = () => {
 
-      //create a canvas
-      //draw scene into canvas
-      const composite = document.createElement("canvas");
-      composite.width = sceneImg.naturalWidth;
-      composite.height = sceneImg.naturalHeight;
-      const compositeCtx = composite.getContext("2d");
+        //draw scene in image
+        const sceneImg = document.createElement("img");
+        sceneImg.onload = () => {
 
-      compositeCtx.drawImage(sceneImg, 0, 0, composite.width, composite.height);
-      compositeCtx.globalCompositeOperation = 'hard-light';
+          //create a canvas
+          //draw scene into canvas
+          const composite = document.createElement("canvas");
+          composite.width = sceneImg.naturalWidth;
+          composite.height = sceneImg.naturalHeight;
+          const compositeCtx = composite.getContext("2d");
 
-      // move the origin to 50, 35
-      compositeCtx.translate(faceTarget.x, faceTarget.y);
+          compositeCtx.drawImage(sceneImg, 0, 0, composite.width, composite.height);
+          compositeCtx.globalCompositeOperation = 'hard-light';
 
-      // now move across and down half the
-      // width and height of the image (which is 128 x 128)
-      compositeCtx.translate(faceTarget.w/2, faceTarget.h/2);
+          // move the origin to 50, 35
+          compositeCtx.translate(faceTarget.x, faceTarget.y);
 
-      // rotate around this point
-      compositeCtx.rotate(faceTarget.rotation * (Math.PI/180));
+          // now move across and down half the
+          // width and height of the image (which is 128 x 128)
+          compositeCtx.translate(faceTarget.w/2, faceTarget.h/2);
+
+          // rotate around this point
+          compositeCtx.rotate(faceTarget.rotation * (Math.PI/180));
 
 
-      compositeCtx.drawImage(faceEditorImage, -faceTarget.w/2, -faceTarget.h/2, faceTarget.w, faceTarget.h);
+          compositeCtx.drawImage(faceEditorImage, -faceTarget.w/2, -faceTarget.h/2, faceTarget.w, faceTarget.h);
 
-      const compositeDataURL = composite.toDataURL();
+          const compositeDataURL = composite.toDataURL('image/jpeg');
 
-      dispatch({
-        type:'FACE_EDIT_COMPLETE',
-        compositeDataURL,
-        index: index
-      });
+          dispatch({
+            type:'FACE_MERGE',
+            compositeDataURL,
+            index
+          });
+
+        };
+
+        sceneImg.src = scene.srcDataURL;
+
 
     };
 
-    sceneImg.src = scene.srcDataURL;
+    faceEditorImage.src = editorFaceURL;
+  }
+}
+
+export const completeFaceEditor = (editorFaceURL = '') => (dispatch, getState) => {
+  dispatch({
+    type: 'FACE_EDIT_COMPLETE',
+    editorFaceURL
   });
+
+  dispatch(mergeActiveFace());
+}
+
+
+
+// blitz actionCreators
+//--------------------------
+
+export const startBlitz = () => (dispatch, getState) => {
+
+  //exit if already blitzing
+  if(getIsBlitzing(getState())) {
+    return;
+  }
+
+  const interval = setInterval(() => {
+    const state = getState();
+    //determine the next activeScene
+    let count = state.blitz.count + 1;
+
+    dispatch({
+      type: 'BLITZ_TICK',
+      count
+    });
+  }, 100);
+
+  dispatch({
+    type: 'BLITZ_START',
+    interval
+  });
+}
+
+export const stopBlitz = () => (dispatch, getState) => {
+  clearInterval(getState().blitz.interval);
+  dispatch({ type: 'BLITZ_STOP' });
+  dispatch(mergeActiveFace());
 }
 
 // share actionCreators

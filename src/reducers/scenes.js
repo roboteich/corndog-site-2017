@@ -67,6 +67,9 @@ export default (state = defaultScenes, action) => {
       return updateSceneAtIndex(state, action.index,
         { srcDataURL: action.srcDataURL });
     case 'FACE_EDIT_COMPLETE':
+      return state.slice()
+        .map(scene => Object.assign({}, scene, {compositeDataURL:null}));
+    case 'FACE_MERGE':
       return updateSceneAtIndex(state, action.index,
         { compositeDataURL: action.compositeDataURL });
     default:

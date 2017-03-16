@@ -24,7 +24,7 @@ export const loadFaceDataURL = () => {
       return new Promise((resolve, reject) => {
         loadImage(
           file,
-          (canvas) => resolve(canvas.toDataURL()),
+          (canvas) => resolve(canvas.toDataURL('image/jpeg')),
           {orientation:true, canvas:true}
         );
       })

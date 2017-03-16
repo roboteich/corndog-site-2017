@@ -66,8 +66,8 @@ class Root extends Component {
           </ReactCSSTransitionGroup>
           <Blitz
             onBlitzToggle={this.handleBlitzToggle}
-            activeScene={this.props.activeScene}
             scenes={this.props.scenes}
+            activeScene={this.props.activeScene}
             orientation={this.props.screen.orientation}
             isBlitzing={this.props.blitz}
             onEditClick={this.props.actions.loadFaceAndEdit}
@@ -80,7 +80,7 @@ class Root extends Component {
             <Editor
               key="editor"
               faceSrcURL={this.props.editor.faceDataURL}
-              onConfirmClick={this.props.actions.mergeFace}
+              onConfirmClick={this.props.actions.completeFaceEditor}
               onCancelClick={this.props.actions.cancelFaceEditor} />
           )}
           { this.props.share && (

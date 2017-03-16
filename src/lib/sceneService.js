@@ -8,7 +8,7 @@ export const loadSceneDataURL = (srcURL) => {
       canvas.width = img.naturalWidth;
       canvas.height =  img.naturalHeight;
       canvas.getContext('2d').drawImage(img, 0, 0);
-      resolve(canvas.toDataURL());
+      resolve(canvas.toDataURL('image/jpeg'));
     }
 
     //start loading
