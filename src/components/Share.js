@@ -28,7 +28,7 @@ const Share = (props) => {
         </h2>
         <div className={"share__actions" + ((pending) ? " share__actions--pending" : "" )}>
           {pending &&
-            <div className="share__message">"Saving..."</div>
+            <div className="share__message text-2">Saving...</div>
           }
           <a href={fbLink} target="_blank" className="button button--block button--facebook">Facebook</a>
           <a href={dataURL} target="_blank" className="button button--block button--secondary">Download</a>
