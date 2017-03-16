@@ -2,8 +2,8 @@
 // promise actionCreators look like (args) => new Promise((resolve, reject) => resolve({type}))
 // thunk actionCreators look like (args) => (dispatch, getState) => {type}
 
-import { getIsBlitzing } from '../reducers';
-import { loadSceneDataURL } from '../lib/sceneService';
+import { getIsBlitzing, getBlitzedIndex } from '../reducers';
+import { loadSceneDataURL, loadSceneCompositeURL } from '../lib/sceneService';
 import { loadFaceDataURL } from '../lib/faceService';
 
 
@@ -170,18 +170,6 @@ export const completeFaceEditor = (editorFaceURL = '') => (dispatch, getState) =
   dispatch(mergeFace());
 }
 
-// share actionCreators
-//--------------------------
-
-export const startShare = () => (dispatch) => {
-  dispatch(stopBlitz());
-  dispatch({ type:"SHARE_START"});
-}
-
-export const completeShare = () => ({
-  type:"SHARE_COMPLETE"
-});
-
 // screen actionCreators
 //--------------------------
 
@@ -232,6 +220,46 @@ export const audioPlayed = () => ({
 
 export const audioStopped = () => ({
   type:'AUDIO_STOPPED'
+});
+
+//
+// Share
+//------------------------------------
+
+const requestSceneCompositeURL = (index) => ({
+  type: 'REQUEST_SCENE_COMPOSITE_URL',
+  index
+});
+
+// receiveScene - transforms the scene on done
+const receiveSceneCompositeURL = (index, compositeURL) => ({
+  type: 'RECEIVE_SCENE_COMPOSITE_URL',
+  index,
+  compositeURL
+});
+
+// fetchScene - starts loading a scene and receives it on load
+export const fetchSceneCompositeURL = (index) => (dispatch, getState) => {
+  dispatch(requestSceneCompositeURL(index));
+  return loadSceneCompositeURL(getState().scenes[index]).then(compositeURL => {
+      dispatch(receiveSceneCompositeURL(index, compositeURL))
+    });
+}
+
+
+// share actionCreators
+//--------------------------
+
+export const startShare = () => (dispatch, getState) => {
+
+
+  dispatch(stopBlitz());
+  dispatch(fetchSceneCompositeURL(getBlitzedIndex(getState())));
+  dispatch({ type:"SHARE_START"});
+}
+
+export const completeShare = () => ({
+  type:"SHARE_COMPLETE"
 });
 
 //

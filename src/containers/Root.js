@@ -49,7 +49,8 @@ class Root extends Component {
   render() {
     //render load progress, readyState
     const activeSceneSrc = (this.props.activeScene) ? this.props.activeScene.srcDataURL : "";
-    const activeSceneCompositeSrc = (this.props.activeScene) ? this.props.activeScene.compositeDataURL : null;
+    const activeSceneCompositeDataSrc = (this.props.activeScene) ? this.props.activeScene.compositeDataURL : null;
+    const activeSceneCompositeSrc = (this.props.activeScene) ? this.props.activeScene.compositeURL : null;
 
     return(
       <div className="site-container xs-full-height xs-fit">
@@ -109,6 +110,7 @@ class Root extends Component {
             <Share
               key="share"
               srcURL={activeSceneSrc}
+              compositeDataURL={activeSceneCompositeDataSrc}
               compositeURL={activeSceneCompositeSrc}
               onCloseClick={this.props.actions.completeShare} />
           )}

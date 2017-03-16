@@ -3,8 +3,20 @@ import {cancelEventAndRun} from '../lib/eventHelpers';
 
 const Share = (props) => {
 
-  const isSrc = !(props.compositeURL);
-  const dataURL = (isSrc) ? props.srcURL : props.compositeURL;
+  const isSrc = !(props.compositeDataURL);
+  const dataURL = (isSrc) ? props.srcURL : props.compositeDataURL;
+  const fbAppId = 254740324978219;
+  const imgLinkURL = props.compositeURL;
+
+  const fbLink = 'https://www.facebook.com/dialog/feed' +
+    '?app_id=' + fbAppId +
+    '&redirect_uri=https://www.corndog.love' +
+    '&link=https://www.corndog.love' +
+    '&picture=' + imgLinkURL +
+    '&caption=National%20Corndog%20Day%20' +
+    '&description=Show%20your%20love%20and%20put%20your%20face%20on%20a%20corndog%20for%20%23NationalCorndogDay';
+
+  const pending = !(isSrc || imgLinkURL);
 
   return (
     <section className="layer layer--share xs-z3">
@@ -14,9 +26,12 @@ const Share = (props) => {
         <h2 className="share__heading">
           Share your masterpiece
         </h2>
-        <div className="share__actions">
-          
-          <a href={dataURL} target="_blank" className="button button--block button--secondary">Save Image</a>
+        <div className={"share__actions" + ((pending) ? " share__actions--pending" : "" )}>
+          {pending &&
+            <div className="share__message">"Saving..."</div>
+          }
+          <a href={fbLink} target="_blank" className="button button--block button--facebook">Facebook</a>
+          <a href={dataURL} target="_blank" className="button button--block button--secondary">Download</a>
         </div>
         <div className="share__controls">
           <a href="#" onClick={cancelEventAndRun(props.onCloseClick)} className="button button--secondary button--circle button--close">close</a>

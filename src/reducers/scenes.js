@@ -24,6 +24,7 @@ const defaultScene = (srcURL, x = 0, y = 0, w = 0, h = 0, rotation = 0, po = "50
     srcDataURL: undefined,
     faceTarget: {x:x - w*.05, y:y- h*.05, w:w*1.1, h:h*1.1, rotation},
     compositeDataURL: undefined,
+    compositeURL: undefined,
     portraitOffset: po,
     landscapeRepeat: lr
   }
@@ -66,9 +67,12 @@ export default (state = defaultScenes, action) => {
     case 'RECEIVE_SCENE':
       return updateSceneAtIndex(state, action.index,
         { srcDataURL: action.srcDataURL });
+    case 'RECEIVE_SCENE_COMPOSITE_URL':
+      return updateSceneAtIndex(state, action.index,
+        { compositeURL: action.compositeURL });
     case 'FACE_EDIT_COMPLETE':
       return state.slice()
-        .map(scene => Object.assign({}, scene, {compositeDataURL:null}));
+        .map(scene => Object.assign({}, scene, {compositeURL:null, compositeDataURL:null}));
     case 'FACE_MERGE':
       return updateSceneAtIndex(state, action.index,
         { compositeDataURL: action.compositeDataURL });

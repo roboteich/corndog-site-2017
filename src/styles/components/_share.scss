@@ -30,8 +30,26 @@
   .share__actions {
     padding: 0 $space-3 $space-2;
     text-align: center;
+    position:relative;
+
+    .share__message {
+      position:absolute;
+      left:50%;
+      top:0;
+      transform:translate3d(-50%, 0, 0);
+    }
+
     .button {
       margin: $space-1;
+      transition:all .35s $easeOutBack;
+    }
+  }
+
+  .share__actions.share__actions--pending {
+    .button {
+      opacity: 0;
+      pointer-events: none;
+      transform:translate3d(0, 50%, 0);
     }
   }
 
