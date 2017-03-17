@@ -58,14 +58,14 @@ const defaultScenes = [
   defaultScene(saltbae, 779, 245, 176, 176, -17, "100% top", true),
   defaultScene(strangerthings, 1337, 219, 259, 259, 0, "80% top"),
   defaultScene(toprope, 716, 0, 261, 261, 49, "29% top"),
-  defaultScene(whale, 1126, 226, 245, 245, 90, "29% top"),
-  defaultScene(nsync, 1502, 28, 333, 333, 0, "100% top"),
-  defaultScene(jayz, 896, 214, 394, 394, -20, "29% top"),
-  defaultScene(fullhouse, 414, 24, 386, 386, 0, "29% top"),
+  defaultScene(whale, 1126, 226, 245, 245, 90, "81% top"),
+  defaultScene(nsync, 1502, 28, 333, 333, 0, "91% top"),
+  defaultScene(jayz, 896, 214, 394, 394, -20, "65% top"),
+  defaultScene(fullhouse, 414, 24, 386, 386, 0, "36% top"),
   defaultScene(fatjewish, 508, 40, 279, 279, 0, "29% top"),
-  defaultScene(dram, 934, 398, 223, 223, 0, "50% top"),
-  defaultScene(dog, 1747, 523, 430, 430, -25, "100% top"),
-  defaultScene(cat, 1056, 48, 301, 301, 0, "50% top")
+  defaultScene(dram, 934, 398, 223, 223, 0, "53% top"),
+  defaultScene(dog, 1454, 130, 430, 430, -25, "93% top"),
+  defaultScene(cat, 1056, 48, 301, 301, 0, "57% top")
 ];
 
 //helpers
