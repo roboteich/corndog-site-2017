@@ -6,7 +6,8 @@ const Share = (props) => {
   const isSrc = !(props.compositeDataURL);
   const dataURL = (isSrc) ? props.srcURL : props.compositeDataURL;
   const fbAppId = 254740324978219;
-  const imgLinkURL = props.compositeURL;
+  const imgLinkURL = (isSrc) ? 'https://www.corndog.love/' + props.srcURL : props.compositeURL;
+  const pageLinkURL = (isSrc) ? '' : encodeURIComponent(props.compositePageURL) + '+%E2%80%94+';
 
   const fbLink = 'https://www.facebook.com/dialog/feed' +
     '?app_id=' + fbAppId +
@@ -17,7 +18,7 @@ const Share = (props) => {
     '&description=Show%20your%20love%20and%20put%20your%20face%20on%20a%20corndog%20for%20%23NationalCorndogDay';
 
   const twLink = 'https://twitter.com/intent/tweet' +
-    '?text=' + encodeURIComponent(props.compositePageURL) + '+%E2%80%94+Show+your+love+at+http%3A%2F%2Fwww.corndog.love+and+put+your+face+on+a+dog+for+%23NationalCorndogDay';
+    '?text=' + pageLinkURL + 'Show+your+love+at+http%3A%2F%2Fwww.corndog.love+and+put+your+face+on+a+dog+for+%23NationalCorndogDay';
 
   const pending = !(isSrc || imgLinkURL);
 

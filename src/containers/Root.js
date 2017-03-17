@@ -48,7 +48,7 @@ class Root extends Component {
 
   render() {
     //render load progress, readyState
-    const activeSceneSrc = (this.props.activeScene) ? this.props.activeScene.srcDataURL : "";
+    const activeSceneSrc = (this.props.activeScene) ? this.props.activeScene.srcURL : "";
     const activeSceneCompositeDataSrc = (this.props.activeScene) ? this.props.activeScene.compositeDataURL : null;
     const activeSceneCompositeSrc = (this.props.activeScene) ? this.props.activeScene.compositeURL : null;
     const activeSceneCompositePageSrc = (this.props.activeScene) ? this.props.activeScene.compositePageURL : null;
