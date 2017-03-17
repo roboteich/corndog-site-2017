@@ -16,6 +16,9 @@ const Share = (props) => {
     '&caption=National%20Corndog%20Day%20' +
     '&description=Show%20your%20love%20and%20put%20your%20face%20on%20a%20corndog%20for%20%23NationalCorndogDay';
 
+  const twLink = 'https://twitter.com/intent/tweet' +
+    '?text=' + encodeURIComponent(props.compositePageURL) + '+%E2%80%94+Show+your+love+at+http%3A%2F%2Fwww.corndog.love+and+put+your+face+on+a+dog+for+%23NationalCorndogDay';
+
   const pending = !(isSrc || imgLinkURL);
 
   return (
@@ -31,6 +34,7 @@ const Share = (props) => {
             <div className="share__message text-2">Saving...</div>
           }
           <a href={fbLink} target="_blank" className="button button--block button--facebook">Facebook</a>
+          <a href={twLink} target="_blank" className="button button--block button--twitter">Twitter</a>
           <a href={dataURL} target="_blank" className="button button--block button--secondary">Download</a>
         </div>
         <div className="share__controls">

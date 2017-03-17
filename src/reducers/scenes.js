@@ -16,6 +16,15 @@ import saltbae from '../assets/scenes/saltbae.jpg';
 import strangerthings from '../assets/scenes/strangerthings.jpg';
 import toprope from '../assets/scenes/toprope.jpg';
 
+import whale from '../assets/scenes/whale.jpg';
+import nsync from '../assets/scenes/nsync.jpg';
+import jayz from '../assets/scenes/jayz.jpg';
+import fullhouse from '../assets/scenes/fullhouse.jpg';
+import fatjewish from '../assets/scenes/fatjewish.jpg';
+import dram from '../assets/scenes/dram.jpg';
+import dog from '../assets/scenes/dog.jpg';
+import cat from '../assets/scenes/cat.jpg';
+
 
 
 const defaultScene = (srcURL, x = 0, y = 0, w = 0, h = 0, rotation = 0, po = "50% top", lr = false) => {
@@ -24,6 +33,7 @@ const defaultScene = (srcURL, x = 0, y = 0, w = 0, h = 0, rotation = 0, po = "50
     srcDataURL: undefined,
     faceTarget: {x:x - w*.05, y:y- h*.05, w:w*1.1, h:h*1.1, rotation},
     compositeDataURL: undefined,
+    compositePageURL: undefined,
     compositeURL: undefined,
     portraitOffset: po,
     landscapeRepeat: lr
@@ -47,7 +57,15 @@ const defaultScenes = [
   defaultScene(richard, 1166, 103, 219, 219,  0, "58% top"),
   defaultScene(saltbae, 779, 245, 176, 176, -17, "100% top", true),
   defaultScene(strangerthings, 1337, 219, 259, 259, 0, "80% top"),
-  defaultScene(toprope, 716, 0, 261, 261, 49, "29% top")
+  defaultScene(toprope, 716, 0, 261, 261, 49, "29% top"),
+  defaultScene(whale, 1126, 226, 245, 245, 90, "29% top"),
+  defaultScene(nsync, 1502, 28, 333, 333, 0, "100% top"),
+  defaultScene(jayz, 896, 214, 394, 394, -20, "29% top"),
+  defaultScene(fullhouse, 414, 24, 386, 386, 0, "29% top"),
+  defaultScene(fatjewish, 508, 40, 279, 279, 0, "29% top"),
+  defaultScene(dram, 934, 398, 223, 223, 0, "50% top"),
+  defaultScene(dog, 1747, 523, 430, 430, -25, "100% top"),
+  defaultScene(cat, 1056, 48, 301, 301, 0, "50% top")
 ];
 
 //helpers
@@ -69,10 +87,10 @@ export default (state = defaultScenes, action) => {
         { srcDataURL: action.srcDataURL });
     case 'RECEIVE_SCENE_COMPOSITE_URL':
       return updateSceneAtIndex(state, action.index,
-        { compositeURL: action.compositeURL });
+        { compositeURL: action.compositeURL, compositePageURL:action.compositePageURL});
     case 'FACE_EDIT_COMPLETE':
       return state.slice()
-        .map(scene => Object.assign({}, scene, {compositeURL:null, compositeDataURL:null}));
+        .map(scene => Object.assign({}, scene, {compositeURL:null, compositePageURL:null, compositeDataURL:null}));
     case 'FACE_MERGE':
       return updateSceneAtIndex(state, action.index,
         { compositeDataURL: action.compositeDataURL });

@@ -34,6 +34,8 @@ export const loadSceneCompositeURL = (scene) => {
       const fd = new FormData();
 
       fd.append('image', compositeUploadData);
+      fd.append('title', 'National Corndog Day');
+      fd.append('description', 'Show your love at http://corndog.love and put your face on a corndog for #NationalCorndogDay');
 
       return fetch(imgurUploadRoute, {
         method: 'POST',
@@ -46,7 +48,7 @@ export const loadSceneCompositeURL = (scene) => {
       }).then(json => {
         console.log(json);
         if(json.success) {
-          resolve(json.data.link);
+          resolve({compositeURL:json.data.link, compositePageURL:'http://imgur.com/'+json.data.id});
         } else {
           reject(json.status);
         }

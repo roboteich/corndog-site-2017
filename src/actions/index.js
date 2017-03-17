@@ -232,17 +232,18 @@ const requestSceneCompositeURL = (index) => ({
 });
 
 // receiveScene - transforms the scene on done
-const receiveSceneCompositeURL = (index, compositeURL) => ({
+const receiveSceneCompositeURL = (index, compositeURL, compositePageURL) => ({
   type: 'RECEIVE_SCENE_COMPOSITE_URL',
   index,
-  compositeURL
+  compositeURL,
+  compositePageURL
 });
 
 // fetchScene - starts loading a scene and receives it on load
 export const fetchSceneCompositeURL = (index) => (dispatch, getState) => {
   dispatch(requestSceneCompositeURL(index));
-  return loadSceneCompositeURL(getState().scenes[index]).then(compositeURL => {
-      dispatch(receiveSceneCompositeURL(index, compositeURL))
+  return loadSceneCompositeURL(getState().scenes[index]).then(({compositeURL, compositePageURL}) => {
+      dispatch(receiveSceneCompositeURL(index, compositeURL, compositePageURL));
     });
 }
 
